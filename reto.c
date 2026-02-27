@@ -34,8 +34,8 @@ int main() {
                 // espera su turno
                 usleep(1000);
             }
-            mem->suma++; // incrementa el valor
-            printf("Hijo imprime: %d\n", mem->suma);
+            mem->suma++; // incrementa el valor compartido
+            printf("Hijo (PID %d) imprime: %d\n", getpid(), mem->suma);
             mem->acceso = 0; // cede el turno al padre
         }
         shmdt(mem);
@@ -46,7 +46,7 @@ int main() {
                 // espera su turno
                 usleep(1000);
             }
-            printf("Padre imprime: %d\n", mem->suma);
+            printf("Padre (PID %d) imprime: %d\n", getpid(), mem->suma);
             mem->acceso = 1; // cede el turno al hijo
         }
         wait(NULL);
